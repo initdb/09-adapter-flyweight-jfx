@@ -25,6 +25,8 @@ public final class FighterFactory {
 	private final NameGenerator nameGenerator;
 	private final ResourceLoader<Image> imageResourceLoader;
 
+
+
 	public FighterFactory() {
 		nameGenerator = new NameGenerator();
 		random = new Random();
