@@ -1,5 +1,7 @@
 package de.thro.inf.prg3.a09.resource;
 
+import de.thro.inf.prg3.a09.model.FlyweightFactory;
+
 import java.io.InputStream;
 import java.util.function.Function;
 

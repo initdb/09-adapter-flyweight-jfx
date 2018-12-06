@@ -10,6 +10,8 @@ import de.thro.inf.prg3.a09.resource.ResourceLoader;
 import de.thro.inf.prg3.a09.util.NameGenerator;
 import javafx.scene.image.Image;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Random;
 
 /**
@@ -25,7 +27,8 @@ public final class FighterFactory {
 	private final NameGenerator nameGenerator;
 	private final ResourceLoader<Image> imageResourceLoader;
 
-
+	// create new FlyweightFactory
+	private final FlyweightFactory flyweightFactory = new FlyweightFactory();
 
 	public FighterFactory() {
 		nameGenerator = new NameGenerator();
@@ -39,20 +42,26 @@ public final class FighterFactory {
 	 * @implNote the method has an implementation flaw because it always loads the fighters image
 	 * @return a new Fighter instance
 	 */
-	public Fighter createFighter() {
+	public Fighter createFighter() throws IOException, URISyntaxException {
 		switch (random.nextInt(NumberOfKnownFighterTypes)) {
 			case 0:
-				return new AWing(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/awing.jpg"));
+				return new AWing(nameGenerator.generateName(),
+					flyweightFactory.getFlyweight("fighter/awing.jpg").getImage());
 			case 1:
-				return new XWing(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/xwing.jpg"));
+				return new XWing(nameGenerator.generateName(),
+					flyweightFactory.getFlyweight("fighter/xwing.jpg").getImage());
 			case 2:
-				return new YWing(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/ywing.jpg"));
+				return new YWing(nameGenerator.generateName(),
+					flyweightFactory.getFlyweight("fighter/ywing.jpg").getImage());
 			case 3:
-				return new TieBomber(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/tiebomber.jpg"));
+				return new TieBomber(nameGenerator.generateName(),
+					flyweightFactory.getFlyweight( "fighter/tiebomber.jpg").getImage());
 			case 4:
-				return new TieFighter(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/tiefighter.jpg"));
+				return new TieFighter(nameGenerator.generateName(),
+					flyweightFactory.getFlyweight("fighter/tiefighter.jpg").getImage());
 			default:
-				return new TieInterceptor(nameGenerator.generateName(), imageResourceLoader.loadResource(ClassLoader.getSystemClassLoader(), "fighter/tieinterceptor.jpg"));
+				return new TieInterceptor(nameGenerator.generateName(),
+					flyweightFactory.getFlyweight("fighter/tieinterceptor.jpg").getImage());
 		}
 	}
 }
